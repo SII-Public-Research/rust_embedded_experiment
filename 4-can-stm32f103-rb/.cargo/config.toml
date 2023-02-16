@@ -1,0 +1,13 @@
+[target.'cfg(all(target_arch = "arm", target_os = "none"))']
+[target.thumbv7m-none-eabi]
+runner = "probe-run --chip STM32F103RB"
+rustflags = [
+  "-C", "link-arg=-Tlink.x",
+]
+
+[build]
+target = "thumbv7m-none-eabi"    # Cortex-M3
+
+[alias]
+rb = "run --bin"
+rrb = "run --release --bin"

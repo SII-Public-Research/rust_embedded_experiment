@@ -1,0 +1,45 @@
+[package]
+edition = "2018"
+name = "HAL-crate"
+version = "0.1.0"
+
+[dependencies]
+embedded-hal = "0.2.3"
+nb = "0.1.2"
+cortex-m = "0.6.2"
+cortex-m-rt = "0.6.11"
+# Panic behaviour, see https://crates.io/keywords/panic-impl for alternatives
+panic-halt = "0.2.0"
+cortex-m-semihosting = "0.3.3"
+#panic-semihosting = "0.5.6"
+rtt-target = { version = "0.3.1", features = ["cortex-m"] }
+
+
+
+# Access to the stm32f103 HAL.
+[dependencies.stm32f1xx-hal]
+# we use "medium density" device
+features = ["stm32f103", "rt", "medium"]
+version = "^0.6.1"
+
+[dependencies.stm32f1]
+version = "0.13.0"
+features = ["stm32f103", "rt"]
+
+# Uncomment for the device example.
+# Update `memory.x`, set target to `thumbv7em-none-eabihf` in `.cargo/config`,
+# and then use `cargo build --examples device` to build it.
+# [dependencies.stm32f3]
+# features = ["stm32f303", "rt"]
+# version = "0.7.1"
+
+# this lets you use `cargo fix`!
+[[bin]]
+name = "HAL-crate"
+test = false
+bench = false
+
+[profile.release]
+codegen-units = 1 # better optimizations
+debug = true # symbols are nice and they don't increase the size on Flash
+lto = true # better optimizations
